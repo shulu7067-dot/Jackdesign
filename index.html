@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jack Design — Beautiful Websites for R150</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:    #E8A0BF;
+      --blush:   #F7D6E0;
+      --cream:   #FFF5F8;
+      --mauve:   #C47FA5;
+      --plum:    #7D3F6B;
+      --soft:    #F2E8F0;
+      --white:   #FFFFFF;
+      --ink:     #3A2035;
+      --muted:   #8A6880;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%;
+      background: rgba(255,245,248,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--blush);
+    }
+
+    .nav-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.7rem;
+      color: var(--plum);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--plum); }
+
+    .nav-cta {
+      background: var(--plum); color: var(--white) !important;
+      padding: 9px 22px; border-radius: 50px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--mauve) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 6% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative blobs */
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .hero::before {
+      width: 500px; height: 500px;
+      background: var(--rose);
+      top: -100px; right: -120px;
+    }
+    .hero::after {
+      width: 380px; height: 380px;
+      background: var(--blush);
+      bottom: -60px; left: -80px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.25rem;
+      color: var(--mauve);
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.6rem);
+      line-height: 1.12;
+      color: var(--plum);
+      max-width: 780px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s forwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--mauve);
+    }
+
+    .hero-sub {
+      margin-top: 22px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    .price-pill {
+      margin-top: 30px;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--white);
+      border: 2px solid var(--rose);
+      border-radius: 60px;
+      padding: 10px 26px;
+      font-size: 1rem; font-weight: 500; color: var(--plum);
+      opacity: 0;
+      animation: fadeUp 0.7s 0.52s forwards;
+    }
+    .price-pill .price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--mauve);
+    }
+
+    .hero-btns {
+      margin-top: 36px;
+      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--plum); color: var(--white);
+      padding: 14px 32px; border-radius: 50px;
+      font-size: 0.95rem; font-weight: 500;
+      text-decoration: none;
+      transition: background 0.22s, transform 0.18s;
+    }
+    .btn-primary:hover { background: var(--mauve); transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); color: var(--plum);
+      border: 2px solid var(--rose);
+      padding: 13px 30px; border-radius: 50px;
+      font-size: 0.95rem; font-weight: 500;
+      text-decoration: none;
+      transition: border-color 0.22s, color 0.22s, transform 0.18s;
+    }
+    .btn-secondary:hover { border-color: var(--mauve); color: var(--mauve); transform: translateY(-2px); }
+
+    /* floating hearts */
+    .hearts {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .heart {
+      position: absolute; font-size: 1rem;
+      animation: floatHeart linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatHeart {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.35; }
+      90%  { opacity: 0.35; }
+      100% { transform: translateY(-10vh) rotate(25deg); opacity: 0; }
+    }
+
+    /* ── WHAT YOU GET ── */
+    .section {
+      padding: 90px 6%;
+    }
+
+    .section-label {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      color: var(--mauve);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--plum);
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1.5px solid var(--blush);
+      border-radius: 22px;
+      padding: 32px 26px;
+      text-align: center;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(196,127,165,0.14);
+    }
+
+    .feature-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--plum);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── PORTFOLIO ── */
+    .portfolio-bg {
+      background: var(--soft);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .portfolio-card {
+      background: var(--white);
+      border: 1.5px solid var(--blush);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+    .portfolio-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 40px rgba(196,127,165,0.16);
+    }
+
+    .portfolio-thumb {
+      height: 160px;
+      background: linear-gradient(135deg, var(--blush) 0%, var(--rose) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-thumb::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(125,63,107,0.08));
+    }
+
+    .portfolio-info { padding: 20px 22px; }
+
+    .portfolio-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--plum);
+      margin-bottom: 5px;
+    }
+
+    .portfolio-info p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .portfolio-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.83rem; font-weight: 500;
+      color: var(--mauve);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--rose);
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .portfolio-link:hover { color: var(--plum); }
+
+    /* Add your own site card */
+    .portfolio-add {
+      border: 2px dashed var(--rose);
+      border-radius: 20px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 240px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      gap: 10px;
+      background: transparent;
+      cursor: default;
+    }
+    .portfolio-add span { font-size: 2rem; }
+
+    /* ── PROCESS ── */
+    .process-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .process-list::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 10%; right: 10%;
+      height: 2px;
+      background: linear-gradient(to right, var(--blush), var(--rose), var(--blush));
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    .step-dot {
+      width: 56px; height: 56px;
+      background: var(--white);
+      border: 3px solid var(--rose);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin: 0 auto 18px;
+      position: relative;
+      z-index: 1;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .process-step:hover .step-dot {
+      background: var(--blush);
+      border-color: var(--mauve);
+    }
+
+    .process-step h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--plum);
+      margin-bottom: 6px;
+    }
+
+    .process-step p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border: 1.5px solid var(--blush);
+      border-radius: 20px;
+      padding: 28px 24px;
+    }
+
+    .stars { color: var(--rose); font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
+
+    .testimonial-card blockquote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-author {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--mauve);
+    }
+
+    /* ── PRICING ── */
+    .pricing-bg { background: var(--soft); }
+
+    .pricing-card {
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 2px solid var(--rose);
+      border-radius: 28px;
+      padding: 44px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card::before {
+      content: '✨ Most Popular';
+      position: absolute; top: 18px; right: -28px;
+      background: var(--plum); color: white;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.05em;
+      padding: 5px 44px;
+      transform: rotate(35deg);
+    }
+
+    .pricing-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      color: var(--plum);
+      line-height: 1;
+    }
+
+    .pricing-amount sup {
+      font-size: 1.6rem;
+      vertical-align: top;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .pricing-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 4px;
+      margin-bottom: 28px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+
+    .pricing-features li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.9rem;
+      color: var(--ink);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--blush);
+    }
+
+    .pricing-features li:last-child { border-bottom: none; }
+
+    .pricing-features li::before {
+      content: '✔';
+      color: var(--mauve);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* ── CONTACT / CTA ── */
+    .cta-section {
+      padding: 90px 6%;
+      text-align: center;
+      background: linear-gradient(135deg, var(--plum) 0%, var(--mauve) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      top: -120px; right: -80px;
+    }
+
+    .cta-section .section-label { color: var(--rose); }
+    .cta-section .section-title { color: var(--white); }
+    .cta-section .section-sub { color: rgba(255,255,255,0.75); }
+
+    .wa-button {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #25D366; color: white;
+      padding: 16px 38px; border-radius: 50px;
+      font-size: 1rem; font-weight: 500;
+      text-decoration: none;
+      transition: background 0.22s, transform 0.18s;
+      margin-top: 10px;
+    }
+    .wa-button:hover { background: #1ebe5d; transform: translateY(-2px); }
+    .wa-icon { font-size: 1.3rem; }
+
+    .contact-note {
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 28px 6%;
+      font-size: 0.82rem;
+    }
+
+    footer a {
+      color: var(--rose);
+      text-decoration: none;
+    }
+
+    footer .footer-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: white;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .process-list::before { display: none; }
+      .pricing-card { padding: 36px 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Jack Design</a>
+    <ul class="nav-links">
+      <li><a href="#features">What's Included</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#process">How It Works</a></li>
+      <li><a href="#contact" class="nav-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hearts" id="hearts"></div>
+    <p class="hero-eyebrow">Your dream website is one message away 💌</p>
+    <h1>Stunning websites for <em>every</em> woman with a vision</h1>
+    <p class="hero-sub">Jack Design creates beautiful, professional business websites so you can show up online with confidence — and finally get the customers you deserve.</p>
+    <div class="price-pill">
+      <span>All-inclusive for just</span>
+      <span class="price">R150</span>
+      <span>— domain & hosting included</span>
+    </div>
+    <div class="hero-btns">
+      <a href="https://wa.me/27657793861?text=Hi%20Jack!%20I'd%20love%20a%20website%20for%20my%20business%20🌸" target="_blank" class="btn-primary">
+        💬 WhatsApp Jack
+      </a>
+      <a href="#portfolio" class="btn-secondary">
+        🌸 See My Work
+      </a>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="section" id="features">
+    <p class="section-label">Everything you need</p>
+    <h2 class="section-title">All of this for R150</h2>
+    <p class="section-sub">No hidden fees, no tech headaches. You get a full, working website — end to end.</p>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <span class="feature-icon">🌐</span>
+        <h3>Your Own Domain</h3>
+        <p>A custom web address like <em>yourbusiness.co.za</em> so clients can find you easily.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">☁️</span>
+        <h3>Hosting Included</h3>
+        <p>Your site is live on the internet 24/7 — no extra monthly fees to worry about.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">📱</span>
+        <h3>Mobile Friendly</h3>
+        <p>Looks gorgeous on phones, tablets, and desktops. Most of your customers browse on mobile.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">🎨</span>
+        <h3>Custom Design</h3>
+        <p>Built to match your brand colors, logo, and personality — not a generic template.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">⚡</span>
+        <h3>Fast Turnaround</h3>
+        <p>Most sites are ready within 3–5 days after you send your content and info.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">💌</span>
+        <h3>Ongoing Support</h3>
+        <p>WhatsApp me any time for small changes or questions after your site goes live.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="section portfolio-bg" id="portfolio">
+    <p class="section-label">My work</p>
+    <h2 class="section-title">Previous websites</h2>
+    <p class="section-sub">A few of the beautiful businesses I've helped get online. More coming soon!</p>
+
+    <div class="portfolio-grid">
+
+      <!-- ✏️ REPLACE the placeholder cards below with your real sites -->
+      <!-- Copy & paste this block for each site you want to add:
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">🌸</div>
+        <div class="portfolio-info">
+          <h3>Business Name</h3>
+          <p>Short description of the business</p>
+          <a href="https://yourlink.com" target="_blank" class="portfolio-link">Visit site ↗</a>
+        </div>
+      </div>
+
+      -->
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">💅</div>
+        <div class="portfolio-info">
+          <h3>Nails by Nomsa</h3>
+          <p>Nail salon landing page with booking info & price list</p>
+          <a href="#" class="portfolio-link">Visit site ↗</a>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">🧁</div>
+        <div class="portfolio-info">
+          <h3>Sweet Thingz Bakery</h3>
+          <p>Custom cakes & treats — gallery and order page</p>
+          <a href="#" class="portfolio-link">Visit site ↗</a>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">👗</div>
+        <div class="portfolio-info">
+          <h3>Thandi's Boutique</h3>
+          <p>Online clothing shop for women's fashion</p>
+          <a href="#" class="portfolio-link">Visit site ↗</a>
+        </div>
+      </div>
+
+      <!-- "Your site here" placeholder -->
+      <div class="portfolio-add reveal">
+        <span>🌸</span>
+        <strong style="color:var(--plum); font-family:'Playfair Display',serif;">Your business here</strong>
+        <p style="font-size:0.82rem; text-align:center; max-width:180px;">Ready to be the next beautiful website I build?</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="process">
+    <p class="section-label">Super simple</p>
+    <h2 class="section-title">How it works</h2>
+    <p class="section-sub">From WhatsApp to live website in just a few days.</p>
+
+    <div class="process-list">
+      <div class="process-step reveal">
+        <div class="step-dot">💬</div>
+        <h4>1. Message me</h4>
+        <p>Send a WhatsApp with your business name, what you do, and any colors or ideas you love.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-dot">🎨</div>
+        <h4>2. I design it</h4>
+        <p>I create a custom website that matches your brand and makes you look amazing online.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-dot">✔️</div>
+        <h4>3. You approve</h4>
+        <p>I send you a preview. You can request any tweaks until you're completely happy.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-dot">🚀</div>
+        <h4>4. Go live!</h4>
+        <p>Pay R150, and your site is published with your own domain. Done and dusted!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section portfolio-bg">
+    <p class="section-label">Happy clients</p>
+    <h2 class="section-title">What they're saying</h2>
+    <p class="section-sub">Real feedback from real business owners. (Add your own reviews once you collect them!)</p>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Jack built my nail salon website in 4 days and it looks absolutely stunning. My clients keep complimenting it and I've gotten so many new bookings!"</blockquote>
+        <p class="testimonial-author">— Nomsa M., Nail Technician</p>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I didn't think I could afford a website but R150 all-in is genuinely unbelievable. Super professional and so easy to work with. Highly recommend!"</blockquote>
+        <p class="testimonial-author">— Thandi K., Boutique Owner</p>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"My bakery page looks like it belongs to a big brand. Jack understood exactly what I wanted and delivered even more than I expected. 10/10."</blockquote>
+        <p class="testimonial-author">— Lerato B., Baker</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section pricing-bg" id="pricing">
+    <p class="section-label">Transparent pricing</p>
+    <h2 class="section-title">One flat price. No surprises.</h2>
+    <p class="section-sub">Everything is included. You never pay extra for domain or hosting.</p>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-amount"><sup>R</sup>150</div>
+      <p class="pricing-label">once-off — everything included</p>
+      <ul class="pricing-features">
+        <li>Professional custom website</li>
+        <li>Your own domain name (.co.za or .com)</li>
+        <li>1-year hosting included</li>
+        <li>Mobile-friendly design</li>
+        <li>WhatsApp contact button</li>
+        <li>Social media links</li>
+        <li>Google-ready (basic SEO)</li>
+        <li>2 rounds of revisions</li>
+        <li>Ready in 3–5 business days</li>
+        <li>Post-launch WhatsApp support</li>
+      </ul>
+      <a href="https://wa.me/27657793861?text=Hi%20Jack!%20I'd%20love%20a%20website%20for%20my%20business%20🌸" target="_blank" class="btn-primary" style="width:100%; justify-content:center; font-size:1rem;">
+        💬 Get started on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section class="cta-section" id="contact">
+    <p class="section-label">Let's build something beautiful</p>
+    <h2 class="section-title">Ready to go online?</h2>
+    <p class="section-sub">Send me a WhatsApp right now — no commitment needed. Ask questions, get a quote, or just say hi! 🌸</p>
+
+    <a href="https://wa.me/27657793861?text=Hi%20Jack!%20I'd%20love%20a%20website%20for%20my%20business%20🌸" target="_blank" class="wa-button">
+      <span class="wa-icon">💬</span>
+      WhatsApp +27 65 779 3861
+    </a>
+    <p class="contact-note">Typically replies within a few hours · Available Mon–Sat</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">Jack Design</span>
+    <p>Beautiful websites for businesses that mean business.</p>
+    <p style="margin-top:6px;">
+      📱 <a href="https://wa.me/27657793861">+27 65 779 3861</a> &nbsp;·&nbsp;
+      Made with 💗 in South Africa
+    </p>
+    <p style="margin-top:10px; font-size:0.75rem; opacity:0.5;">© 2025 Jack Design. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Floating hearts
+    const heartsEl = document.getElementById('hearts');
+    const emojis = ['💗', '🌸', '✨', '💕', '🌷'];
+    for (let i = 0; i < 14; i++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      h.style.left = Math.random() * 100 + '%';
+      h.style.fontSize = (0.7 + Math.random() * 0.8) + 'rem';
+      const dur = 10 + Math.random() * 14;
+      const delay = Math.random() * -20;
+      h.style.animation = `floatHeart ${dur}s ${delay}s linear infinite`;
+      heartsEl.appendChild(h);
+    }
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+
+</body>
+</html>
