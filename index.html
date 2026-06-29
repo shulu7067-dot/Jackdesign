@@ -336,7 +336,72 @@
       cursor: default;
     }
     .portfolio-add span { font-size: 2rem; }
+/* ── GAMES ── */
 
+.games-bg{
+    background: var(--cream);
+}
+
+.games-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    max-width:1000px;
+    margin:auto;
+}
+
+.game-card{
+    background:var(--white);
+    border:1.5px solid var(--blush);
+    border-radius:22px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.game-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+}
+
+.game-thumb{
+    height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:70px;
+    background:linear-gradient(135deg,var(--plum),var(--mauve));
+    color:white;
+}
+
+.game-info{
+    padding:25px;
+}
+
+.game-info h3{
+    color:var(--plum);
+    margin-bottom:10px;
+    font-family:'Playfair Display',serif;
+}
+
+.game-info p{
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.game-btn{
+    display:inline-block;
+    text-decoration:none;
+    background:var(--plum);
+    color:white;
+    padding:12px 22px;
+    border-radius:30px;
+    transition:.3s;
+}
+
+.game-btn:hover{
+    background:var(--mauve);
+}
     /* ── PROCESS ── */
     .process-list {
       display: grid;
@@ -592,6 +657,7 @@
     <ul class="nav-links">
       <li><a href="#features">What's Included</a></li>
       <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#games">Games</a></li>
       <li><a href="#process">How It Works</a></li>
       <li><a href="#contact" class="nav-cta">Get Started</a></li>
     </ul>
@@ -719,7 +785,40 @@
 
     </div>
   </section>
+<!-- GAMES -->
+<section class="section games-bg" id="games">
+    <p class="section-label">Fun Projects</p>
+    <h2 class="section-title">Browser Games I've Built</h2>
+    <p class="section-sub">
+        I don't just build websites—I also create fun browser games.
+        Click any game below to play.
+    </p>
 
+    <div class="games-grid">
+
+        <div class="game-card reveal">
+            <div class="game-thumb">
+                🎮
+            </div>
+
+            <div class="game-info">
+                <h3>Arcade</h3>
+                <p>
+                    A fast-paced browser arcade game built with HTML, CSS and JavaScript.
+                </p>
+
+                <a href="https://shulu7067-dot.github.io/Arcade/"
+                   target="_blank"
+                   class="game-btn">
+                    ▶ Play Now
+                </a>
+            </div>
+        </div>
+
+        <!-- Add more games below by copying this card -->
+
+    </div>
+</section>
   <!-- HOW IT WORKS -->
   <section class="section" id="process">
     <p class="section-label">Super simple</p>
